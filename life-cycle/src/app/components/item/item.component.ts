@@ -8,7 +8,7 @@ import { Item } from 'src/app/interfaces/iItem';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  
+
   @Input() item!: Item;
 
   faPen = faPen;
