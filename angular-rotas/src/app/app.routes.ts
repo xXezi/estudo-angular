@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { RegistroComponent } from './paginas/registro/registro.component';
 import { ListaPostagemComponent } from './paginas/lista-postagem/lista-postagem.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LayoutComponent } from './componentes/layout/layout.component';
 
 export const routes: Routes = [
     {
@@ -10,8 +11,14 @@ export const routes: Routes = [
         component: RegistroComponent
     },
     {
-        path: "posts",
+        path: "",
+        component: LayoutComponent,
         canActivate: [AuthGuard],
-        component: ListaPostagemComponent
+        children: [
+            {
+                path: "posts",
+                component: ListaPostagemComponent
+            }
+        ]
     }
 ];
