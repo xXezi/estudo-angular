@@ -5,6 +5,7 @@ import { ListaPostagemComponent } from './paginas/lista-postagem/lista-postagem.
 import { AuthGuard } from './guards/auth.guard';
 import { LayoutComponent } from './componentes/layout/layout.component';
 import { DetalhesPostagemComponent } from './paginas/detalhes-postagem/detalhes-postagem.component';
+import { postResolver } from './resolvers/post.resolver';
 
 export const routes: Routes = [
     {
@@ -18,11 +19,13 @@ export const routes: Routes = [
         children: [
             {
                 path: "posts",
-                component: ListaPostagemComponent
+                loadChildren: () => import("./paginas/lista-postagem/lista-postagem.module")
+                    .then(module => module.ListaPostagemModule)
             },
             {
                 path: "posts/:id",
-                component: DetalhesPostagemComponent
+                component: DetalhesPostagemComponent,
+                resolve: {post: postResolver}
             }
         ]
     }
