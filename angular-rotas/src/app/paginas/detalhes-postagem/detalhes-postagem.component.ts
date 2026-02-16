@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import * as data from "../../db.json";
 import { UsuarioPostagemComponent } from '../../componentes/usuario-postagem/usuario-postagem.component';
 import { Postagem } from '../../models/post.model';
@@ -11,6 +13,28 @@ import { Postagem } from '../../models/post.model';
   imports: [CommonModule, UsuarioPostagemComponent], 
 
 })
-export class DetalhesPostagemComponent {
-  @Input() post!: Postagem;
+export class DetalhesPostagemComponent implements OnInit{  
+
+  postId: string | null = null;
+  post: Postagem | undefined;
+
+  constructor(
+    private rotaAtual: ActivatedRoute, 
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.postId = this.rotaAtual.snapshot.paramMap.get("id");
+
+    if(this.postId){
+      const posts: Postagem[] = data.posts
+      this.post = posts.find(post => post.id === this.postId);
+
+      if(!this.post){
+        this.router.navigate(["/posts"]);
+      }
+    }
+
+
+  }
 }

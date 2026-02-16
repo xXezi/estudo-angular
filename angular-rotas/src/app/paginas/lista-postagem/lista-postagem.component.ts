@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterConfigOptions } from '@angular/router';
+
 import * as data from '../../db.json'; 
 import { Postagem } from '../../models/post.model'; 
 import { CartaoPostagemComponent } from '../../componentes/cartao-postagem/cartao-postagem.component';
@@ -16,6 +18,12 @@ export class ListaPostagemComponent implements OnInit {
 
   ngOnInit() {
     this.posts = data.posts
+  }
+
+  constructor(private router: Router){}
+
+  vaParaOPost(postId: string){
+    this.router.navigate(["/posts", postId]);
   }
 
 }
